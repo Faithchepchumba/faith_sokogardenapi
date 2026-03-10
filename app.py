@@ -43,7 +43,7 @@ def signin():
     password = request.form['password']
     print(email, password)
     connection = pymysql.connect(host ="mysql-faith.alwaysdata.net",user="faith",password="modcom2026",database ="faith_sokogarden")
-    cursor = connection.cursor()
+    cursor = connection.cursor(pymysql.cursors.DictCursor)
     sql="select user_id,username,email,phone from users where email=%s and password =%s"
     data =(email, password)
     cursor.execute(sql,data)
