@@ -1,9 +1,12 @@
 from flask import *
 import pymysql
 import os
+from flask_cors import CORS
 
 
 app= Flask (__name__)
+CORS(app)
+
 app.config['UPLOAD_FOLDER']='static/images'
 
 @app.route("/api/signup",methods =["POST"])
@@ -16,7 +19,7 @@ def signup():
 
     print(username, email, phone, password)
     # create db connection
-    connection = pymysql.connect(host="localhost",user ="root",password="",database ="faith_sokogarden")
+    connection = pymysql.connect(host="mysql-faith.alwaysdata.net",user ="faith",password="modcom2026",database ="faith_sokogarden")
 
     # create cursor 
     cursor = connection.cursor(pymysql.cursors.DictCursor)
@@ -39,7 +42,7 @@ def signin():
     email = request.form['email']
     password = request.form['password']
     print(email, password)
-    connection = pymysql.connect(host ="localhost",user="root",password="",database ="faith_sokogarden")
+    connection = pymysql.connect(host ="mysql-faith.alwaysdata.net",user="faith",password="modcom2026",database ="faith_sokogarden")
     cursor = connection.cursor()
     sql="select user_id,username,email,phone from users where email=%s and password =%s"
     data =(email, password)
@@ -75,7 +78,7 @@ def addProduct():
     product_image.save(file_path)
  
     # create a connection db
-    connection=pymysql.connect(host="localhost",user="root",password="",database="faith_sokogarden")
+    connection=pymysql.connect(host="mysql-faith.alwaysdata.net",user="faith",password="modcom2026",database="faith_sokogarden")
 
     cursor=connection.cursor()
     # sql to execute
@@ -92,7 +95,7 @@ def addProduct():
 
 @app.route("/api/get_products")
 def getproducts():
-    connection = pymysql.connect(host="localhost",user ="root",password="",database="faith_sokogarden")
+    connection = pymysql.connect(host="mysql-faith.alwaysdata.net",user ="faith",password="modcom2026",database="faith_sokogarden")
     cursor=connection.cursor(pymysql.cursors.DictCursor)
     sql ="select * from product_details"
     cursor.execute(sql)
@@ -165,5 +168,5 @@ def mpesa_payment():
     
 
 
-if __name__=="__main__":
-    app.run(debug = True)
+# if __name__=="__main__":
+#     app.run(debug = True)
